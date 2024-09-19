@@ -115,6 +115,7 @@ fun Calculator() {
     }
 }
 
+//formato e cor dos botões
 @Composable
 fun CalculatorButton(text: String, onClick: () -> Unit) {
     Button(onClick = onClick, modifier = Modifier
@@ -129,6 +130,7 @@ fun CalculatorButton(text: String, onClick: () -> Unit) {
     }
 }
 
+//Lógica das expressões
 fun eval(expression: String): Double {
     val values = mutableListOf<Double>()
     val ops = mutableListOf<Char>()
