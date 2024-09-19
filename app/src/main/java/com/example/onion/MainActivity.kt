@@ -20,6 +20,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.TextUnit
 import com.example.onion.ui.theme.OnionTheme
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
@@ -54,8 +56,9 @@ fun Calculator() {
             painter = painterResource(id = R.drawable.menphis),
             contentDescription = null,
             modifier = Modifier
-                .size(250.dp)
+                .size(600.dp)
                 .align(Alignment.TopCenter)
+                .padding(bottom = 350.dp)
         )
     }
 
@@ -63,8 +66,11 @@ fun Calculator() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
+
+        Spacer(modifier = Modifier.height(315.dp))
+
         // Textos da equação e seu resultado
         Text(text = input, modifier = Modifier.padding(8.dp))
         Text(text = result, modifier = Modifier.padding(8.dp))
@@ -78,17 +84,19 @@ fun Calculator() {
             "(", ")", "=", "<-"
         )
 
+        val buttonFontSize = 35.sp
+
         //Lógica dos botoes de apagar, apagar tudo e igual
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             buttons.forEach { text ->
                 item {
-                    CalculatorButton(text) {
+                    CalculatorButton(text, onClick = {
                         when (text) {
                             "C" -> {
                                 input = ""
@@ -108,7 +116,7 @@ fun Calculator() {
                             }
                             else -> input += text
                         }
-                    }
+                    }, fontSize = buttonFontSize)
                 }
             }
         }
@@ -117,16 +125,18 @@ fun Calculator() {
 
 //formato e cor dos botões
 @Composable
-fun CalculatorButton(text: String, onClick: () -> Unit) {
+fun CalculatorButton(text: String, onClick: () -> Unit, fontSize: TextUnit = 100.sp) {
     Button(onClick = onClick, modifier = Modifier
         .size(80.dp),
-    shape = RoundedCornerShape(0.dp),
+    shape = RoundedCornerShape(25.dp),
     colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFFFFA500), // Cor do botão
             contentColor = Color.Black // Cor do texto
         )
     ) {
-        Text(text = text)
+        Text(text = text,
+        fontSize = fontSize
+        )
     }
 }
 
